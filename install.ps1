@@ -31,6 +31,7 @@ param(
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 $Repo = "dmtr-io/redactrail"
+$InstallDir = [System.IO.Path]::GetFullPath($InstallDir)
 
 function Write-Step([string]$Text) {
     Write-Host ""
@@ -200,6 +201,7 @@ function Stop-Existing([int]$ProxyPort) {
 }
 
 function Start-Redactrail([string]$PythonExe, [string]$Target, [int]$ProxyPort) {
+    $Target = [System.IO.Path]::GetFullPath($Target)
     $windowless = Join-Path (Split-Path -Parent $PythonExe) "pythonw.exe"
     $exe = if (Test-Path $windowless) { $windowless } else { $PythonExe }
     $arguments = @(
@@ -259,7 +261,13 @@ Write-Note "файлы установлены"
 if (-not $NoStart) {
     Stop-Existing $Port
     if (-not (Start-Redactrail $python.Exe $InstallDir $Port)) {
-        Fail "прокси не ответил на /health. Смотри $InstallDir\state\admin.log"
+        Get-Content (Join-Path $InstallDir "state\app.log") -Tail 5 -ErrorAction SilentlyContinue |
+            ForEach-Object { Write-Note $_ }
+        Get-Content (Join-Path $InstallDir "state\admin.log") -Tail 5 -ErrorAction SilentlyContinue |
+            ForEach-Object { Write-Note $_ }
+        Get-Content (Join-Path $InstallDir "state\proxy.log") -Tail 5 -ErrorAction SilentlyContinue |
+            ForEach-Object { Write-Note $_ }
+        Fail "прокси не ответил на /health. Смотри $InstallDir\state\app.log"
     }
     Write-Note "прокси отвечает: http://127.0.0.1:$Port/health"
 }
