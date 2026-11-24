@@ -185,8 +185,10 @@ class RunDecodingTests(unittest.TestCase):
     """Вывод команд декодируется без падения: кодировка консоли ≠ локаль."""
 
     def test_undecodable_bytes_are_replaced(self) -> None:
-        # 0x98 — байт «Ш» в OEM-866, в cp1251 такого символа нет. Именно на нём
-        # падал поток чтения `subprocess`, и вывод терялся вместе с трейсбеком.
+        # 0x98 не является началом UTF-8-последовательности, поэтому вывод
+        # декодируется с заменой байта на U+FFFD в любой локали (в cp1252 этот
+        # байт — «˜», в cp1251 не определён; фиксированная UTF-8-декодировка
+        # убирает зависимость теста от кодировки машины).
         script = "import sys; sys.stdout.buffer.write(b'\\x98'); sys.stderr.buffer.write(b'\\x98')"
         with mock.patch.object(services, "available", return_value=True):
             result = services._run([sys.executable, "-c", script])

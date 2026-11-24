@@ -41,6 +41,7 @@ from . import scan
 from .detections import apply_mask
 from .policy import DEFAULT_REVIEW_URL, Policy, load_policy
 from .winutil import hidden_kwargs
+from .runtime import enable_utf8_output
 
 DEFAULT_SESSIONS = Path.home() / ".dsh" / "sessions"
 DEFAULT_BASE_URL = DEFAULT_REVIEW_URL
@@ -997,6 +998,7 @@ def run_review(
 
 
 def main(argv: list[str] | None = None) -> int:
+    enable_utf8_output()
     parser = argparse.ArgumentParser(description="Ночной аудит сессий DSH")
     parser.add_argument("--sessions", default=str(DEFAULT_SESSIONS))
     parser.add_argument("--days", type=int, default=7)

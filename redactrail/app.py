@@ -24,6 +24,7 @@ from pathlib import Path
 from typing import Any
 
 from . import __version__, admin, proxy, services
+from .runtime import enable_utf8_output
 
 DEFAULT_PROXY_PORT = 8787
 DEFAULT_ADMIN_PORT = 8788
@@ -79,6 +80,7 @@ def serve(server: Any, name: str) -> threading.Thread:
 
 
 def main(argv: list[str] | None = None) -> int:
+    enable_utf8_output()
     parser = argparse.ArgumentParser(description="redactrail: прокси и админка одним процессом")
     parser.add_argument("--root", default=".", help="каталог проекта (policy.json, state, audit)")
     parser.add_argument("--proxy-port", type=int, default=DEFAULT_PROXY_PORT)

@@ -41,6 +41,7 @@ from .oplog import OpLog
 from .policy import Policy, load_policy
 from .pseudonym import Pseudonymizer, load_or_create_key
 from .sanitizer import BlockedRequest, BlockEvent, Sanitizer, restore_json, restore_tokens
+from .runtime import enable_utf8_output
 
 DEFAULT_PORT = 8787
 DEFAULT_UPSTREAM = "https://api.deepseek.com"
@@ -650,6 +651,7 @@ def build_server(
 
 
 def main(argv: list[str] | None = None) -> int:
+    enable_utf8_output()
     parser = argparse.ArgumentParser(description="Локальный прокси-маскировщик для DSH")
     parser.add_argument("--port", type=int, default=int(os.environ.get("REDACTRAIL_PORT", DEFAULT_PORT)))
     parser.add_argument("--upstream", default=os.environ.get("REDACTRAIL_UPSTREAM", DEFAULT_UPSTREAM))

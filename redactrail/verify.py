@@ -23,6 +23,7 @@ from pathlib import Path
 
 from . import checksums
 from .proxy import build_server
+from .runtime import enable_utf8_output
 
 #: Соответствие класса детектора префиксу псевдонима.
 PREFIX = {
@@ -178,6 +179,7 @@ def run(
 
 
 def main(argv: list[str] | None = None) -> int:
+    enable_utf8_output()
     parser = argparse.ArgumentParser(description="Проверка утечек через локальную заглушку")
     parser.add_argument("--policy", default=None)
     args = parser.parse_args(argv)

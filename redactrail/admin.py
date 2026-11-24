@@ -35,6 +35,7 @@ from .audit import append_line, prune_audit
 from .detections import apply_mask
 from .oplog import OpLog
 from .policy import load_policy
+from .runtime import enable_utf8_output
 
 DEFAULT_PORT = 8788
 TOKEN_FILE = Path("state") / "admin-token"
@@ -2558,6 +2559,7 @@ def _open_browser(url: str) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
+    enable_utf8_output()
     parser = argparse.ArgumentParser(description="Админка ревью redactrail")
     parser.add_argument("--port", type=int, default=int(os.environ.get("REDACTRAIL_ADMIN_PORT", DEFAULT_PORT)))
     parser.add_argument("--root", default=os.environ.get("REDACTRAIL_ROOT", "."))

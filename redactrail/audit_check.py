@@ -15,6 +15,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from .audit import RECORD_VERSION, SUPPORTED_VERSIONS
+from .runtime import enable_utf8_output
 
 REQUIRED_REQUESTS = ("time", "masked")
 REQUIRED_BLOCKS = ("time", "class", "hash", "where")
@@ -110,6 +111,7 @@ def run(directory: Path, pattern: str = "*.jsonl") -> Report:
 
 
 def main(argv: list[str] | None = None) -> int:
+    enable_utf8_output()
     parser = argparse.ArgumentParser(description="Проверка журналов redactrail")
     parser.add_argument("--dir", default="audit")
     parser.add_argument("--pattern", default="*.jsonl")
