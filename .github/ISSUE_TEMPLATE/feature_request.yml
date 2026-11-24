@@ -1,0 +1,34 @@
+name: Предложение
+description: Новое правило, интеграция или улучшение админки
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Проблема
+      description: Что сегодня неудобно или рискованно?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Предложение
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Область
+      options:
+        - правила детекции
+        - прокси / транспорт
+        - админка
+        - аудит / локальная модель
+        - бенчмарк / корпус
+        - документация
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Альтернативы и компромиссы

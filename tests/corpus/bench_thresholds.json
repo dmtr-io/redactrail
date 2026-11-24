@@ -1,0 +1,17 @@
+{
+  "classes": {
+    "person": {"recall_overlap": 0.95, "precision": 0.85},
+    "phone": {"recall_overlap": 0.95, "precision": 0.9},
+    "email": {"recall_overlap": 0.95, "precision": 0.9},
+    "inn": {"recall_overlap": 0.95, "precision": 0.9},
+    "ogrn": {"recall_overlap": 0.95, "precision": 0.9},
+    "snils": {"recall_overlap": 0.95, "precision": 0.9},
+    "card": {"recall_overlap": 0.95, "precision": 0.9},
+    "account": {"recall_overlap": 0.9, "precision": 0.9},
+    "bik": {"recall_overlap": 0.95, "precision": 0.9},
+    "user": {"recall_overlap": 0.95, "precision": 0.9},
+    "secret_assign": {"recall_overlap": 1.0, "precision": 0.9},
+    "secret_token": {"recall_overlap": 1.0, "precision": 0.9},
+    "marker": {"recall_overlap": 0.95, "precision": 0.9}
+  }
+}

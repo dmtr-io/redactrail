@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Windows / Python ${{ matrix.python }}
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Use example policy
+        run: Copy-Item policy.example.json policy.json
+      - name: Unit tests
+        run: python -m unittest discover -s tests -t . -v
+      - name: Detector benchmark gate
+        run: python scripts/bench_detectors.py --corpus tests/corpus/pii_bench.jsonl --gate

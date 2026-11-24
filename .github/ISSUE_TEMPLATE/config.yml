@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Уязвимость безопасности
+    url: https://github.com/dmtr-io/redactrail/security/advisories/new
+    about: Сообщайте приватно, не в публичном issue.
+  - name: Документация
+    url: https://github.com/dmtr-io/redactrail/tree/main/docs
+    about: Архитектура, модель угроз, админка, аудит, бенчмарк.

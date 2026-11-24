@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "redactrail"
+version = "0.1.0"
+description = "Local privacy proxy for DeepSeek Harness: masks PII, secrets and blocks unserializable request shapes"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { file = "LICENSE" }
+authors = [{ name = "dmtr-io" }]
+keywords = ["privacy", "pii", "proxy", "deepseek", "dsh", "llm"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Security",
+]
+dependencies = []
+
+[project.scripts]
+redactrail = "redactrail.proxy:main"
+redactrail-admin = "redactrail.admin:main"
+redactrail-app = "redactrail.app:main"
+redactrail-review = "redactrail.review:main"
+redactrail-verify = "redactrail.verify:main"
+redactrail-check = "redactrail.audit_check:main"
+
+[tool.setuptools.packages.find]
+include = ["redactrail*"]
+
+[tool.setuptools.package-data]
+redactrail = ["*.json"]
+
+[project.urls]
+Repository = "https://github.com/dmtr-io/redactrail"
+Issues = "https://github.com/dmtr-io/redactrail/issues"

@@ -1,0 +1,29 @@
+# Local policy (публикуется только policy.example.json)
+policy.json
+
+# Runtime state: pseudonym key, caches, audit journals, policy backups.
+state/
+audit/
+vendor/
+policy.json.bak-*
+
+# Secrets and local databases
+*.key
+*.db
+*.sqlite
+*.sqlite3
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+
+# Local scratch
+*.log
+tmp/
+.pipcheck/

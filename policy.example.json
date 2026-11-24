@@ -1,0 +1,193 @@
+{
+  "mode": "strict",
+  "actions": {
+    "account": "mask",
+    "address": "mask",
+    "bik": "mask",
+    "blob": "mask",
+    "card": "mask",
+    "dob": "mask",
+    "document": "allow",
+    "email": "mask",
+    "image": "allow",
+    "inn": "mask",
+    "kpp": "mask",
+    "marker": "mask",
+    "ogrn": "mask",
+    "org": "mask",
+    "oversize": "block",
+    "passport": "mask",
+    "person": "mask",
+    "phone": "mask",
+    "private_key": "mask",
+    "secret_assign": "mask",
+    "secret_token": "mask",
+    "snils": "mask",
+    "thinking": "mask",
+    "unknown_block": "block",
+    "unknown_field": "block",
+    "user": "mask"
+  },
+  "markers": [
+    "коммерческая тайна",
+    "конфиденциально",
+    "конфиденциальная информация",
+    "для служебного пользования",
+    "ДСП",
+    "ноу-хау",
+    "строго конфиденциально",
+    "не для распространения",
+    "for internal use only",
+    "confidential",
+    "strictly confidential",
+    "trade secret",
+    "under nda"
+  ],
+  "allow": [
+    {
+      "name": "guid",
+      "pattern": "\\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\b",
+      "classes": [
+        "*"
+      ],
+      "precheck": [
+        "-"
+      ]
+    },
+    {
+      "name": "iso_datetime",
+      "pattern": "\\b\\d{4}-\\d{2}-\\d{2}(?:[T ]\\d{2}:\\d{2}(?::\\d{2}(?:\\.\\d+)?)?(?:Z|[+-]\\d{2}:\\d{2})?)?\\b",
+      "classes": [
+        "dob",
+        "phone",
+        "card"
+      ],
+      "precheck": [
+        "-"
+      ]
+    },
+    {
+      "name": "pseudonym_token",
+      "pattern": "\\[\\[[A-Z]+_[0-9A-F]{10}\\]\\]",
+      "classes": [
+        "*"
+      ],
+      "precheck": [
+        "[["
+      ]
+    },
+    {
+      "name": "url",
+      "pattern": "\\bhttps?://[^\\s<>\"']+",
+      "classes": [
+        "phone",
+        "card",
+        "account",
+        "inn",
+        "snils",
+        "ogrn",
+        "kpp",
+        "bik"
+      ],
+      "precheck": [
+        "http",
+        "ftp"
+      ]
+    },
+    {
+      "name": "hex_digest",
+      "pattern": "\\b[0-9a-f]{32,64}\\b",
+      "classes": [
+        "card",
+        "inn",
+        "snils",
+        "ogrn",
+        "account"
+      ],
+      "precheck": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f"
+      ]
+    }
+  ],
+  "limits": {
+    "chunk_chars": 12000,
+    "request_chars": 200000,
+    "budget_ms": 150,
+    "retention_days": 30
+  },
+  "restore": {
+    "text": true,
+    "tool_use": true
+  },
+  "request": {
+    "allowed_fields": [
+      "model",
+      "messages",
+      "system",
+      "max_tokens",
+      "temperature",
+      "top_p",
+      "top_k",
+      "stop_sequences",
+      "stream",
+      "tools",
+      "tool_choice",
+      "metadata",
+      "thinking",
+      "output_format",
+      "service_tier",
+      "container",
+      "output_config"
+    ],
+    "allowed_roles": [
+      "user",
+      "assistant",
+      "system"
+    ],
+    "allowed_block_types": [
+      "text",
+      "thinking",
+      "redacted_thinking",
+      "tool_addition",
+      "tool_removal",
+      "tool_use",
+      "tool_result"
+    ],
+    "blocked_block_types": [
+      "image",
+      "document"
+    ]
+  },
+  "review": {
+    "base_url": "http://127.0.0.1:11434/v1/chat/completions",
+    "model": "qwen2.5-coder-7b-instruct-q4_k_m",
+    "sessions": "",
+    "days": 7,
+    "limit": 0,
+    "per_session": 0
+  },
+  "extra_rules": [
+    {
+      "name": "model-phone-17eacc0b",
+      "class": "phone",
+      "pattern": "(?<!\\d)9\\d{9}(?!\\d)",
+      "flags": "",
+      "explanation": "мобильный без +7/8: ровно 10 цифр, начинается с 9"
+    }
+  ]
+}
