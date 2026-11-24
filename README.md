@@ -14,6 +14,29 @@
 > **Статус: 0.1.0, beta.** Область — только DeepSeek Harness. Windows-first.
 > Это не DLP и не юридическая гарантия: эвристики, локальные словари и правила.
 
+## Установка (Windows)
+
+Скачать установщик из последнего релиза и запустить его:
+
+```powershell
+irm https://github.com/dmtr-io/redactrail/releases/latest/download/install.ps1 -OutFile install.ps1
+powershell -ExecutionPolicy Bypass -File .\install.ps1
+```
+
+Установщик без прав администратора:
+
+- ставит Python 3.12+, если его нет (winget или официальный установщик python.org);
+- распаковывает релиз в `%LOCALAPPDATA%\redactrail`;
+- создаёт `policy.json` из примера (существующий не трогает);
+- запускает прокси и админку и проверяет `/health`;
+- открывает админку в браузере и подсказывает адрес для DSH.
+
+Флаги: `-Autostart` (задачи планировщика), `-Port 8787`, `-NoStart`, `-NoPython`,
+`-SourcePath <zip>` (установка из локального архива).
+
+Удаление: `uninstall.ps1` из каталога установки; по умолчанию сохраняет
+`policy.json`, `state/` и `audit/`, с `-Purge` удаляет всё.
+
 ## Область применения
 
 | | |

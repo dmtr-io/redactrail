@@ -29,3 +29,28 @@ jobs:
         run: python -m unittest discover -s tests -t . -v
       - name: Detector benchmark gate
         run: python scripts/bench_detectors.py --corpus tests/corpus/pii_bench.jsonl --gate
+
+  installer:
+    name: Installer smoke test
+    runs-on: windows-latest
+    env:
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Build release archive
+        run: python scripts/build_release.py
+      - name: Install from local archive
+        shell: pwsh
+        run: |
+          $zip = (Get-ChildItem dist\redactrail-*.zip | Select-Object -First 1).FullName
+          powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -SourcePath $zip -InstallDir "$env:RUNNER_TEMP\rt" -NoPython -NoStart
+          if (-not (Test-Path "$env:RUNNER_TEMP\rt\policy.json")) { throw "policy.json not created" }
+          if (-not (Test-Path "$env:RUNNER_TEMP\rt\redactrail\app.py")) { throw "code not installed" }
+      - name: Uninstall
+        shell: pwsh
+        run: |
+          powershell -NoProfile -ExecutionPolicy Bypass -File .\uninstall.ps1 -InstallDir "$env:RUNNER_TEMP\rt" -Purge -Force
+          if (Test-Path "$env:RUNNER_TEMP\rt") { throw "install dir not removed" }

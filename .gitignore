@@ -27,3 +27,5 @@ dist/
 *.log
 tmp/
 .pipcheck/
+
+dist/
