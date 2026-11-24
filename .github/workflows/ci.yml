@@ -54,3 +54,24 @@ jobs:
         run: |
           powershell -NoProfile -ExecutionPolicy Bypass -File .\uninstall.ps1 -InstallDir "$env:RUNNER_TEMP\rt" -Purge -Force
           if (Test-Path "$env:RUNNER_TEMP\rt") { throw "install dir not removed" }
+
+  secrets:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Install gitleaks
+        run: |
+          curl -sSfL -o gitleaks.tar.gz https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz
+          tar -xzf gitleaks.tar.gz gitleaks
+          sudo install -m 0755 gitleaks /usr/local/bin/gitleaks
+          gitleaks version
+      - name: Scan tracked files
+        run: |
+          mkdir -p scan
+          git archive HEAD | tar -x -C scan
+          gitleaks dir scan --redact -v --exit-code 1
+      - name: Scan history
+        run: gitleaks detect --source . --redact -v --exit-code 1

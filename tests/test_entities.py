@@ -147,8 +147,8 @@ class SecretTests(unittest.TestCase):
             "ghp_" + "a1B2c3D4e5F6g7H8i9J0k1L2m3N4o5P6q7R8",
             "xoxb-123456789012-abcdefghij",
             "sk_live_" + "1234567890abcdefghijklmn",
-            "AIzaSyA1234567890abcdefghijklmnopqrstuv",
-            "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.dBjftJeZ4CVPmB92K27uhbUJU1p1r_wW1gFWFOEjXk",
+            "AIzaSyA1234567890abcdefghijklmnopqrstuv",  # gitleaks:allow
+            "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.dBjftJeZ4CVPmB92K27uhbUJU1p1r_wW1gFWFOEjXk",  # gitleaks:allow
         )
         for sample in samples:
             with self.subTest(sample=sample[:12]):
@@ -158,7 +158,7 @@ class SecretTests(unittest.TestCase):
         self.assertIn("secret_token", classes("Authorization: Bearer abcdefghijklmnop1234567890"))
 
     def test_assignments(self) -> None:
-        for text in ("password=hunter2secret", "api_key = 0123456789abcdef", "пароль: qwerty123"):
+        for text in ("password=hunter2secret", "api_key = 0123456789abcdef", "пароль: qwerty123"):  # gitleaks:allow
             with self.subTest(text=text):
                 self.assertIn("secret_assign", classes(text))
 

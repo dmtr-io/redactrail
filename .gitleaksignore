@@ -1,0 +1,7 @@
+# Синтетические образцы секретов в тестах детектора (tests/test_entities.py).
+# Это не настоящие ключи: строки специально похожи на секреты, чтобы проверить
+# маскирование. Отпечатки ниже относятся к первому коммиту, где они появились;
+# в рабочих прогонах эти же строки помечены комментарием gitleaks:allow.
+bf32221d3a397f50b204203c9b7ea5b22a849edf:tests/test_entities.py:gcp-api-key:150
+bf32221d3a397f50b204203c9b7ea5b22a849edf:tests/test_entities.py:jwt:151
+bf32221d3a397f50b204203c9b7ea5b22a849edf:tests/test_entities.py:generic-api-key:161
