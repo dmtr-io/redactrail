@@ -13,6 +13,29 @@ shapes it cannot parse. Standard library only.
 > **Status: 0.1.0, beta.** Scope: DeepSeek Harness only, Windows-first.
 > This is not a DLP product and not a compliance guarantee.
 
+## Installation (Windows)
+
+Download the installer from the latest release and run it:
+
+```powershell
+irm https://github.com/dmtr-io/redactrail/releases/latest/download/install.ps1 -OutFile install.ps1
+powershell -ExecutionPolicy Bypass -File .\install.ps1
+```
+
+The installer needs no administrator rights. It:
+
+- installs Python 3.12+ when missing (winget or the official python.org installer);
+- unpacks the release into `%LOCALAPPDATA%\redactrail`;
+- creates `policy.json` from the example (never overwrites an existing one);
+- starts the proxy and admin UI and checks `/health`;
+- opens the admin UI and prints the address to put into DSH.
+
+Flags: `-Autostart`, `-Port 8787`, `-NoStart`, `-NoPython`,
+`-SourcePath <zip>` (install from a local archive).
+
+Uninstall with `uninstall.ps1` from the install directory; by default it
+keeps `policy.json`, `state/` and `audit/`; `-Purge` removes everything.
+
 ## Scope
 
 | | |
