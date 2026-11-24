@@ -12,6 +12,8 @@ jobs:
   tests:
     name: Windows / Python ${{ matrix.python }}
     runs-on: windows-latest
+    env:
+      PYTHONIOENCODING: utf-8
     strategy:
       fail-fast: false
       matrix:

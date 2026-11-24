@@ -21,6 +21,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 from redactrail import scan
 from redactrail.detections import Finding
 from redactrail.policy import load_policy
+from redactrail.runtime import enable_utf8_output
 
 PUNCT = " \t.,;:()[]«»\"'"
 
@@ -175,6 +176,7 @@ def gate_failures(result: dict, thresholds: dict) -> list[str]:
 
 
 def main(argv: list[str] | None = None) -> int:
+    enable_utf8_output()
     parser = argparse.ArgumentParser(description="Бенчмарк детекторов PII")
     parser.add_argument("--corpus", action="append", required=True)
     parser.add_argument("--policy", default=None)

@@ -23,6 +23,7 @@ sys.path.insert(0, str(ROOT))
 
 from redactrail import entities, ner  # noqa: E402
 from redactrail.detections import Finding  # noqa: E402
+from redactrail.runtime import enable_utf8_output  # noqa: E402
 
 CORPUS = ROOT / "tests" / "corpus" / "ner_corpus.jsonl"
 CLASSES = ("person", "org", "address", "phone")
@@ -147,6 +148,7 @@ def score(cases: list[Case]) -> dict[str, dict[str, float]]:
 
 
 def main() -> int:
+    enable_utf8_output()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--verbose", action="store_true", help="показать промахи")
     parser.add_argument("--corpus", type=Path, default=CORPUS)

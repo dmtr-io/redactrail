@@ -12,8 +12,13 @@ import argparse
 import json
 import pathlib
 import shutil
+import sys
 import time
 from datetime import date, datetime, timedelta, timezone
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
+
+from redactrail.runtime import enable_utf8_output
 
 
 def write_json(path: pathlib.Path, payload: object) -> None:
@@ -22,6 +27,7 @@ def write_json(path: pathlib.Path, payload: object) -> None:
 
 
 def main() -> int:
+    enable_utf8_output()
     parser = argparse.ArgumentParser(description="Демо-данные для скриншотов админки")
     parser.add_argument("--out", default="tmp/demo-admin")
     args = parser.parse_args()

@@ -16,6 +16,7 @@ import sys
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 
 from redactrail import checksums, ru_names
+from redactrail.runtime import enable_utf8_output
 
 OUT = pathlib.Path("tests/corpus/pii_bench.jsonl")
 
@@ -265,6 +266,7 @@ CASES.extend(bulk_cases())
 
 
 def main() -> int:
+    enable_utf8_output()
     OUT.parent.mkdir(parents=True, exist_ok=True)
     lines: list[str] = []
     for index, (kind, text, entities) in enumerate(CASES, start=1):
